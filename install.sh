@@ -36,14 +36,15 @@ while true; do
     echo "🕯️ Com um simples comando, os feitiços do sistema e das ferramentas serão lançados."
     echo "🦇 Sua jornada no abismo do código começou. Escolha sua opção abaixo..."
     echo
-    echo "1. Instalar Sistema Básico"
-    echo "2. Ferramentas de Desenvolvimento"
-    echo "3. Ferramentas de Mídia"
-    echo "4. Jogos"
-    echo "5. Ferramentas de Terminal"
+    echo "1. Instalar Pacotes Básicos do Sistema"
+    echo "2. Instalar Ferramentas de Desenvolvimento"
+    echo "3. Instalar Ferramentas de Mídia"
+    echo "4. Instalar Ferramentas de Jogos"
+    echo "5. Instalar Ferramentas de Terminal"
     echo "6. Configurar Webapps"
     echo "7. Hyprland DotFiles"
-    echo "8. Instalar Tudo"
+    echo "8. Sincronizar Relógio do Windows"
+    echo "9. Instalar Tudo"
     echo "0. Sair"
     echo
     echo "Escolha suas opções (separadas por espaço):"
@@ -59,7 +60,8 @@ while true; do
             5) run_script scripts/terminal_tools.sh ;;
             6) run_script scripts/webapps.sh ;;
             7) run_script scripts/hyprland_dotfiles.sh ;;
-            8) run_script scripts/install_all.sh ;;
+            8) run_script scripts/SyncWindowsClock.sh ;;
+            9) run_script scripts/install_all.sh ;;
             0) echo "Saindo..."; exit 0 ;;
             *) echo "Opção inválida: $choice" ;;
         esac
