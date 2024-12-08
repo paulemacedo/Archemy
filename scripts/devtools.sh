@@ -1,38 +1,29 @@
 #!/bin/bash
 
-# Função para instalar Hyprdots
-install_hyprdots() {
-    echo "Instalando Hyprdots..."
-    sudo pacman -S --needed git base-devel
-    git clone --depth 1 https://github.com/prasanthrangan/hyprdots ~/HyDE
-    cd ~/HyDE/Scripts || { echo "Falha ao acessar o diretório HyDE/Scripts."; exit 1; }
-    ./install.sh
-    echo "Hyprdots instalado com sucesso!"
-}
+# Carregando a configuração do gerenciador de pacotes
+source config.sh
 
-# Função para instalar End-4's Hyprland Dotfiles
-install_end_4() {
-    echo "Instalando End-4's Hyprland Dotfiles..."
-    bash <(curl -s "https://end-4.github.io/dots-hyprland-wiki/setup.sh")
-    echo "End-4's Hyprland Dotfiles instalado com sucesso!"
-}
+# Definindo os pacotes a serem instalados
+PACKAGES="python nodejs git code github-desktop"
 
-# Menu interativo
-while true; do
-    echo "============================="
-    echo "   Escolha seu Dotfiles      "
-    echo "============================="
-    echo "1. Hyprdots"
-    echo "2. End-4's Hyprland Dotfiles"
-    echo "0. Sair"
-    echo
-    read -p "Escolha uma opção: " choice
-    echo
+# Verificando se o arquivo de configuração foi carregado corretamente
+echo "Gerenciador de Pacotes: $PKG_MANAGER"
+echo "Pacotes a serem instalados: $PACKAGES"
 
-    case $choice in
-        1) install_hyprdots ; break ;;
-        2) install_end_4 ; break ;;
-        0) echo "Saindo..." ; exit ;;
-        *) echo "Opção inválida! Tente novamente." ;;
-    esac
-done
+# Instalando ferramentas com o gerenciador de pacotes detectado
+if [ "$PKG_MANAGER" == "paru" ]; then
+    echo "Usando o gerenciador de pacotes paru..."
+    paru -Syu --needed $PACKAGES --noconfirm
+elif [ "$PKG_MANAGER" == "yay" ]; then
+    echo "Usando o gerenciador de pacotes yay..."
+    yay -Syu --needed $PACKAGES --noconfirm
+else
+    echo "Usando o gerenciador de pacotes pacman..."
+    sudo pacman -Syu --needed $PACKAGES --noconfirm
+fi
+
+# Instalando PyCharm via Flatpak
+echo "Instalando PyCharm via Flatpak..."
+flatpak install flathub com.jetbrains.PyCharm-Community --yes
+
+echo "Ferramentas de desenvolvimento instaladas!"

@@ -24,9 +24,12 @@ while true; do
     echo "  ▒   ▒▒ ░  ░▒ ░ ▒░  ░  ▒    ▒ ░▒░ ░ ░ ░  ░░  ░      ░ ▓██ ░▒░"
     echo "  ░   ▒     ░░   ░ ░         ░  ░░ ░   ░   ░      ░    ▒ ▒ ░░"
     echo "      ░  ░   ░     ░ ░       ░  ░  ░   ░  ░       ░    ░ ░"
-    echo "================================="
-    echo "𝙎𝘾𝙍𝙄𝙋𝙏𝙎, 𝘾𝙊𝙉𝙁𝙄𝙂𝙎 𝘼𝙉𝘿 𝘼𝙎𝙎𝙀𝙏𝙎"
-    echo "================================="
+    echo 
+    echo "============================================================="
+    echo "Cada script é um feitiço que invoca um conjunto de programas."
+    echo " - Paule Macedo"
+    echo "============================================================="
+    echo 
     echo "🦇 O ritual da noite está prestes a começar..."
     echo "⚰️ Uma força sombria desperta para dominar a instalação de sua máquina."
     echo "🖤 Sinta o poder ancestral enquanto você invoca programas e ferramentas."
