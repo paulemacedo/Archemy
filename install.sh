@@ -7,7 +7,31 @@ else
     echo "Erro: config.sh não encontrado!" >&2
     exit 1
 fi
-
+# Função para atualizar o sistema
+update_system() {
+    echo "Atualizando o sistema..."
+    case "$PKG_MANAGER" in
+        paru)
+            paru -Syu --noconfirm
+            ;;
+        yay)
+            yay -Syu --noconfirm
+            ;;
+        apt)
+            sudo apt update && sudo apt upgrade -y
+            ;;
+        dnf)
+            sudo dnf upgrade --refresh -y
+            ;;
+        pacman)
+            sudo pacman -Syu --noconfirm
+            ;;
+        *)
+            echo "Gerenciador de pacotes não suportado: $PKG_MANAGER"
+            exit 1
+            ;;
+    esac
+}
 # Funções de instalação
 install_software() {
     SOFTWARE=$1
@@ -33,7 +57,6 @@ install_package() {
             yay -Sy --needed $package --noconfirm || install_flatpak $package
             ;;
         apt)
-            sudo apt update
             sudo apt install -y $package || install_flatpak $package
             ;;
         dnf)
@@ -117,6 +140,10 @@ install_apps_menu() {
         esac
     done
 }
+
+
+# Atualizar o sistema antes de instalar qualquer coisa
+update_system
 
 # Menu principal
 while true; do
