@@ -18,7 +18,7 @@ Script modular para instalação e configuração de sistemas Linux, com foco em
    ```bash
    git clone https://github.com/paulemacedo/Archemy.git
    cd Archemy
-   ./install.sh
+   ./main.sh
    ```
 ## Módulos
 - `package_manager.sh`: Gerenciamento de pacotes
