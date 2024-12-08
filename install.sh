@@ -27,7 +27,7 @@ while true; do
     echo 
     echo "============================================================="
     echo "Cada script é um feitiço que invoca um conjunto de programas."
-    echo " - Paule Macedo"
+    echo "                                            🦇Paule Macedo🦇"
     echo "============================================================="
     echo 
     echo "🦇 O ritual da noite está prestes a começar..."
