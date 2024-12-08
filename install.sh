@@ -1,27 +1,32 @@
 #!/bin/bash
+
 # Carregando a configuração do gerenciador de pacotes
 source config.sh
+
+# Função para instalar pacotes
+install_packages() {
+    local packages="$1"
+    echo "Pacotes a serem instalados: $packages"
+
+    if [ "$PKG_MANAGER" == "paru" ]; then
+        paru -Syu --needed $packages --noconfirm
+    elif [ "$PKG_MANAGER" == "yay" ]; then
+        yay -Syu --needed $packages --noconfirm
+    elif [ "$PKG_MANAGER" == "apt" ]; then
+        sudo apt update
+        sudo apt install -y $packages
+    elif [ "$PKG_MANAGER" == "dnf" ]; then
+        sudo dnf install -y $packages
+    else
+        sudo pacman -Syu --needed $packages --noconfirm
+    fi
+}
 
 # Função para instalar scripts específicos
 run_script() {
     echo "Executando: $1"
     bash "$1" || { echo "Erro ao executar $1"; exit 1; }
 }
-
-echo "Atualizando sistema..."
-# Instalando ferramentas com o gerenciador de pacotes detectado
-if [ "$PKG_MANAGER" == "paru" ]; then
-    paru -Syu 
-elif [ "$PKG_MANAGER" == "yay" ]; then
-    yay -Syu
-elif [ "$PKG_MANAGER" == "apt" ]; then
-    sudo apt update && sudo apt upgrade
-elif [ "$PKG_MANAGER" == "dnf" ]; then
-    sudo dnf upgrade --refresh
-else
-    sudo pacman -Syu
-fi
-
 
 # Instalar todos os componentes
 install_all() {
@@ -68,19 +73,25 @@ while true; do
     read -p "Exemplo: 1 3 5: " choices
     echo
 
+    PACKAGES=""
+
     for choice in $choices; do
         case $choice in
-            1) run_script scripts/system.sh ;;
-            2) run_script scripts/devtools.sh ;;
-            3) run_script scripts/media_tools.sh ;;
-            4) run_script scripts/gaming_tools.sh ;;
-            5) run_script scripts/terminal_tools.sh ;;
+            1) PACKAGES+="git base-devel fish paru flatpak kitty " ;;
+            2) PACKAGES+="python nodejs git code github-desktop " ;;
+            3) PACKAGES+="vlc gimp inkscape " ;;
+            4) PACKAGES+="steam lutris " ;;
+            5) PACKAGES+="fastfetch nitch btop cava pokemon-colorscripts-git neo " ;;
             6) run_script scripts/webapps.sh ;;
             7) run_script scripts/hyprland_dotfiles.sh ;;
             8) run_script scripts/SyncWindowsClock.sh ;;
-            9) run_script scripts/install_all.sh ;;
+            9) install_all ;;
             0) echo "Saindo..."; exit 0 ;;
             *) echo "Opção inválida: $choice" ;;
         esac
     done
+
+    if [ -n "$PACKAGES" ]; then
+        install_packages "$PACKAGES"
+    fi
 done
