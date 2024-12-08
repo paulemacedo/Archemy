@@ -12,6 +12,51 @@ source "$SCRIPT_DIR/dotfiles.sh"
 source "$SCRIPT_DIR/system_config.sh"
 source "$SCRIPT_DIR/helper.sh"
 
+# Verificar argumentos de linha de comando
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    show_help
+    exit 0
+elif [[ "$1" == "-i || "$1" == "--minimal" ]]; then
+    install_all_apps
+    exit 0
+elif [[ "$1" == "-w" || "$1" == "--webapps" ]]; then
+    install_all_webapps
+    exit 0
+elif [[ "$1" == "-c" || "$1" == "--complete" ]]; then
+    install_all_apps
+    install_all_webapps
+    sync_windows_clock
+    exit 0
+fi
+
+
+# Função para exibir a ajuda
+show_help() {
+    echo "Uso: $0 [opções]"
+    echo
+    echo "Archemy: Sistema de Instalação e Configuração Linux"
+    echo
+    echo "Descrição:"
+    echo "  Archemy é um script para instalação e configuração de sistemas Linux,"
+    echo "  com foco em distribuições Arch e derivadas. Ele automatiza a instalação de"
+    echo "  pacotes, configuração de WebApps, instalação de dotfiles do Hyprland e"
+    echo "  otimizações de sistema."
+    echo
+    echo "Recursos:"
+    echo "  - Detecção automática do gerenciador de pacotes"
+    echo "  - Instalação de pacotes via pacman, paru, yay, apt, dnf e Flatpak"
+    echo "  - Configuração de WebApps"
+    echo "  - Instalação de dotfiles do Hyprland"
+    echo "  - Otimizações de sistema"
+    echo
+    echo "Opções:"
+    echo "  ./main.sh -h, --help        Exibe esta mensagem de ajuda"
+    echo "  ./main.sh -i, --minimal     Instala todos os aplicativos"
+    echo "  ./main.sh -w, --webapps     Instala todos os WebApps"
+    echo "  ./main.sh -c, --complete    Instala todos os aplicativos, WebApps e sincroniza o relógio"
+    echo "  ./main.sh                   Execute o script sem opções para exibir o menu interativo"
+}
+
 # Menu principal
 main_menu() {
     while true; do

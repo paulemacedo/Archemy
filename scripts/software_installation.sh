@@ -43,6 +43,15 @@ install_terminal_tools_packages() {
     install_package "pokemon-colorscripts-git"
 }
 
+# Função para instalar todos os aplicativos
+install_all_apps() {
+    install_basic_system_packages
+    install_devtools_packages
+    install_media_tools_packages
+    install_gaming_tools_packages
+    install_terminal_tools_packages
+}
+
 # Menu de instalação de aplicativos
 install_apps_menu() {
     while true; do
@@ -65,13 +74,7 @@ install_apps_menu() {
             3) install_media_tools_packages ;;
             4) install_gaming_tools_packages ;;
             5) install_terminal_tools_packages ;;
-            6)
-                install_basic_system_packages
-                install_devtools_packages
-                install_media_tools_packages
-                install_gaming_tools_packages
-                install_terminal_tools_packages
-                ;;
+            6) install_all_apps ;;
             0) break ;;
             *) echo "Opção inválida!" ;;
         esac

@@ -20,6 +20,13 @@ Script modular para instalação e configuração de sistemas Linux, com foco em
    cd Archemy
    ./main.sh
    ```
+   ## Opções
+   - `Sem Comandos`: Executa o script principal com menu
+   - `-h, --help`: Exibe a mensagem de ajuda
+   - `-i, --minimal`: Instala todos os aplicativos
+   - `-w, --webapps`: Instala todos os webapps
+   - `-c, --complete`: Instala todos os aplicativos, webapps e sincroniza o relógio com o windows
+
 ## Módulos
 - `package_manager.sh`: Gerenciamento de pacotes
 - `system_update.sh`: Atualização do sistema
@@ -27,6 +34,8 @@ Script modular para instalação e configuração de sistemas Linux, com foco em
 - `webapp_config.sh`: Configuração de WebApps
 - `dotfiles.sh`: Instalação de dotfiles
 - `system_config.sh`: Configurações do sistema
+- `helper.sh`: Funções auxiliares para mensagens, logs, backups e verificações
+
 
 ## Contribuição
 Pull requests são bem-vindos. Para mudanças importantes, abra uma issue primeiro.

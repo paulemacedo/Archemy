@@ -25,6 +25,13 @@ EOF
     success_msg "WebApp $name configurado com sucesso!"
 }
 
+# Função para instalar todos os WebApps
+install_all_webapps() {
+    configure_webapp "Telegram" "https://web.telegram.org/" "telegram"
+    configure_webapp "WhatsApp" "https://web.whatsapp.com/" "whatsapp"
+    # Adicione outros WebApps aqui
+}
+
 # Menu de WebApps
 install_webapps_menu() {
     while true; do
@@ -43,8 +50,7 @@ install_webapps_menu() {
             1) configure_webapp "Telegram" "https://web.telegram.org/" "telegram" ;;
             2) configure_webapp "WhatsApp" "https://web.whatsapp.com/" "whatsapp" ;;
             3)
-                configure_webapp "Telegram" "https://web.telegram.org/" "telegram"
-                configure_webapp "WhatsApp" "https://web.whatsapp.com/" "whatsapp"
+                install_all_webapps
                 success_msg "Todos os WebApps foram configurados!"
                 ;;
             0) return ;;
