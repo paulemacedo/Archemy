@@ -8,61 +8,117 @@ else
     exit 1
 fi
 
-# Variável para armazenar os pacotes a serem instalados
-PACKAGES=()
+# Funções de instalação
+install_software() {
+    SOFTWARE=$1
+    FLATPAK_ID=$2
+    PKG_ID=$3
 
-# Definindo os pacotes a serem instalados
-BASIC_SYSTEM_PACKAGES="git fish flatpak kitty"
-ARCH_EXCLUSIVE_PACKAGES="base-devel paru"
-DEVTOOLS_PACKAGES="python nodejs git code github-desktop"
-ALL_PACKAGES=("$BASIC_SYSTEM_PACKAGES" "$DEVTOOLS_PACKAGES" "$MEDIA_TOOLS_PACKAGES" "$GAMING_TOOLS_PACKAGES" "$TERMINAL_TOOLS_PACKAGES")
-GAMING_TOOLS_PACKAGES="steam lutris"
-TERMINAL_TOOLS_PACKAGES="fastfetch nitch btop cava pokemon-colorscripts-git neo"
+    if [ -n "$PKG_ID" ]; then
+        install_package "$PKG_ID" || install_flatpak "$FLATPAK_ID"
+    else
+        install_flatpak "$FLATPAK_ID"
+    fi
+}
 
-# Adicionando todos os pacotes em uma variável
-ALL_PACKAGES=($BASIC_SYSTEM_PACKAGES $DEVTOOLS_PACKAGES $MEDIA_TOOLS_PACKAGES $GAMING_TOOLS_PACKAGES $TERMINAL_TOOLS_PACKAGES)
-
-# Função para instalar pacotes
-install_packages() {
-    echo "Pacotes a serem instalados: ${PACKAGES[@]}"
+install_package() {
+    local package=$1
+    echo "Instalando pacote: $package"
 
     case "$PKG_MANAGER" in
         paru)
-            paru -Sy --needed ${PACKAGES[@]} --noconfirm
+            paru -Sy --needed $package --noconfirm || install_flatpak $package
             ;;
         yay)
-            yay -Sy --needed ${PACKAGES[@]} --noconfirm
+            yay -Sy --needed $package --noconfirm || install_flatpak $package
             ;;
         apt)
             sudo apt update
-            sudo apt install -y ${PACKAGES[@]}
+            sudo apt install -y $package || install_flatpak $package
             ;;
         dnf)
-            sudo dnf install -y ${PACKAGES[@]}
+            sudo dnf install -y $package || install_flatpak $package
             ;;
         *)
-            sudo pacman -Sy --needed ${PACKAGES[@]} --noconfirm
+            sudo pacman -Sy --needed $package --noconfirm || install_flatpak $package
             ;;
     esac
 }
 
-# Função para instalar scripts específicos
-run_script() {
-    echo "Executando: $1"
-    bash "$1" || { echo "Erro ao executar $1" >&2; exit 1; }
+install_flatpak() {
+    local package=$1
+    echo "Instalando pacote via flatpak: $package"
+    flatpak install flathub $package -y
 }
 
-install_all() {
-    # Instalar todos os componentes
-    PACKAGES=($ALL_PACKAGES)
-    install_packages
-    for script in scripts/*.sh; do
-        run_script "$script"
+# Funções de instalação de pacotes
+install_basic_system_packages() {
+    install_software "Git" "com.git.git" "git"
+    install_software "Fish" "com.fishshell.fish" "fish"
+    install_software "Flatpak" "org.flatpak.Flatpak" "flatpak"
+    install_software "Kitty" "io.kitty.Kitty" "kitty"
+    if [[ "$PKG_MANAGER" == "pacman" || "$PKG_MANAGER" == "yay" || "$PKG_MANAGER" == "paru" ]]; then
+        install_software "Base-devel" "" "base-devel"
+        install_software "Paru" "" "paru"
+    else
+        echo "Gerenciador de pacotes não é compatível com pacotes exclusivos do Arch."
+        echo "Pacotes exclusivos do Arch não serão instalados."
+    fi
+}
+
+install_devtools_packages() {
+    install_software "Python3" "org.python.Python3" "python3"
+    install_software "Python3-pip" "" "python3-pip"
+    install_software "Node.js" "org.nodejs.Node" "nodejs"
+    install_software "VS Code" "com.visualstudio.code" ""
+    install_software "GitHub Desktop" "io.github.shiftey.Desktop" ""
+}
+
+install_media_tools_packages() {
+    install_software "VLC" "org.videolan.VLC" "vlc"
+    install_software "GIMP" "org.gimp.GIMP" "gimp"
+    install_software "Inkscape" "org.inkscape.Inkscape" "inkscape"
+}
+
+install_gaming_tools_packages() {
+    install_software "Steam" "com.valvesoftware.Steam" "steam"
+    install_software "Lutris" "net.lutris.Lutris" "lutris"
+}
+
+install_terminal_tools_packages() {
+    install_software "Fastfetch" "com.github.fastfetch.Fastfetch" "fastfetch"
+    install_software "Nitch" "com.github.nitch.Nitch" "nitch"
+    install_software "Btop" "com.github.aristocratos.Btop" "btop"
+    install_software "Cava" "com.github.karlstav.Cava" "cava"
+    install_software "Pokemon Colorscripts" "" "pokemon-colorscripts-git"
+    install_software "Neo" "com.github.neo.Neo" "neo"
+}
+
+# Função para o submenu de instalação de aplicativos
+install_apps_menu() {
+    while true; do
+        echo "1. Instalar Pacotes Básicos do Sistema"
+        echo "2. Instalar Ferramentas de Desenvolvimento"
+        echo "3. Instalar Ferramentas de Mídia"
+        echo "4. Instalar Ferramentas de Jogos"
+        echo "5. Instalar Ferramentas de Terminal"
+        echo "0. Voltar ao menu principal"
+        echo
+        read -p "Escolha uma opção: " sub_choice
+
+        case $sub_choice in
+            1) install_basic_system_packages ;;
+            2) install_devtools_packages ;;
+            3) install_media_tools_packages ;;
+            4) install_gaming_tools_packages ;;
+            5) install_terminal_tools_packages ;;
+            0) break ;;
+            *) echo "Opção inválida!" ;;
+        esac
     done
 }
 
-
-# Menu interativo
+# Menu principal
 while true; do
     echo "▄▄▄       ██▀███   ▄████▄   ██░ ██ ▓█████  ███▄ ▄███▓▓██   ██▓"
     echo "▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▓██░ ██▒▓█   ▀ ▓██▒▀█▀ ██▒ ▒██  ██▒"
@@ -74,58 +130,20 @@ while true; do
     echo "  ░   ▒     ░░   ░ ░         ░  ░░ ░   ░   ░      ░    ▒ ▒ ░░"
     echo "      ░  ░   ░     ░ ░       ░  ░  ░   ░  ░       ░    ░ ░"
     echo 
-    echo "============================================================="
-    echo "Cada script é um feitiço que invoca um conjunto de programas."
-    echo "                                            🦇Paule Macedo🦇"
-    echo "============================================================="
-    echo 
-    echo "🦇 O ritual da noite está prestes a começar..."
-    echo "⚰️ Uma força sombria desperta para dominar a instalação de sua máquina."
-    echo "🖤 Sinta o poder ancestral enquanto você invoca programas e ferramentas."
-    echo "🕯️ Com um simples comando, os feitiços do sistema e das ferramentas serão lançados."
-    echo "🦇 Sua jornada no abismo do código começou. Escolha sua opção abaixo..."
-    echo
-    echo "1. Instalar Pacotes Básicos do Sistema"
-    echo "2. Instalar Ferramentas de Desenvolvimento"
-    echo "3. Instalar Ferramentas de Mídia"
-    echo "4. Instalar Ferramentas de Jogos"
-    echo "5. Instalar Ferramentas de Terminal"
-    echo "6. Configurar Webapps"
-    echo "7. Hyprland DotFiles"
-    echo "8. Sincronizar Relógio do Windows"
-    echo "9. Instalar Tudo"
+    echo "1. Instalar Apps"
+    echo "2. Instalar WebApps"
+    echo "3. Instalar Dotfiles do Hyprland"
+    echo "4. Sincronizar relógio (Localtime)"
     echo "0. Sair"
     echo
-    echo "Escolha suas opções (separadas por espaço):"
-    read -p "Exemplo: 1 3 5: " choices
-    echo
+    read -p "Escolha uma opção: " choice
 
-
-    for choice in $choices; do
-        case $choice in
-            1) 
-                PACKAGES+=($BASIC_SYSTEM_PACKAGES)
-                if [[ "$PKG_MANAGER" == "pacman" || "$PKG_MANAGER" == "yay" || "$PKG_MANAGER" == "paru" ]]; then
-                    PACKAGES+=($ARCH_EXCLUSIVE_PACKAGES)
-                else
-                    echo "Gerenciador de pacotes não é compatível com pacotes exclusivos do Arch."
-                    echo "Pacotes exclusivos do Arch não serão instalados."
-                fi
-                ;;
-            2) PACKAGES+=($DEVTOOLS_PACKAGES) ;; 
-            3) PACKAGES+=($MEDIA_TOOLS_PACKAGES) ;;
-            4) PACKAGES+=($GAMING_TOOLS_PACKAGES) ;;
-            5) PACKAGES+=($TERMINAL_TOOLS_PACKAGES) ;;
-            6) run_script scripts/webapps.sh ;;
-            7) run_script scripts/hyprland_dotfiles.sh ;;
-            8) run_script scripts/SyncWindowsClock.sh ;;
-            9) install_all ;;
-            0) echo "Saindo..."; exit 0 ;;
-            *) echo "Opção inválida: $choice" ;;
-        esac
-    done
-
-    if [ -n "$PACKAGES" ]; then
-        install_packages
-    fi
-done 
+    case $choice in
+        1) install_apps_menu ;;
+        2) run_script scripts/webapps.sh ;;
+        3) run_script scripts/hyprland_dotfiles.sh ;;
+        4) run_script scripts/SyncWindowsClock.sh ;;
+        0) echo "Saindo..."; exit 0 ;;
+        *) echo "Opção inválida!" ;;
+    esac
+done
