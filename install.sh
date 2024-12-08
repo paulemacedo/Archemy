@@ -93,7 +93,7 @@ install_devtools_packages() {
     install_software "Python3" "org.python.Python3" "python3"
     install_software "Python3-pip" "" "python3-pip"
     install_software "Node.js" "org.nodejs.Node" "nodejs"
-    install_software "VS Code" "com.visualstudio.code" ""
+    install_software "VS Code" "com.visualstudio.code" "code"
     install_software "GitHub Desktop" "io.github.shiftey.Desktop" ""
 }
 
@@ -125,19 +125,29 @@ install_apps_menu() {
         echo "3. Instalar Ferramentas de Mídia"
         echo "4. Instalar Ferramentas de Jogos"
         echo "5. Instalar Ferramentas de Terminal"
+        echo "6. Instalar Todos os Aplicativos"
         echo "0. Voltar ao menu principal"
         echo
-        read -p "Escolha uma opção: " sub_choice
+        read -p "Escolha uma ou mais opções (ex: 1 2 3): " sub_choice
 
-        case $sub_choice in
-            1) install_basic_system_packages ;;
-            2) install_devtools_packages ;;
-            3) install_media_tools_packages ;;
-            4) install_gaming_tools_packages ;;
-            5) install_terminal_tools_packages ;;
-            0) break ;;
-            *) echo "Opção inválida!" ;;
-        esac
+        for choice in $sub_choice; do
+            case $choice in
+                1) install_basic_system_packages ;;
+                2) install_devtools_packages ;;
+                3) install_media_tools_packages ;;
+                4) install_gaming_tools_packages ;;
+                5) install_terminal_tools_packages ;;
+                6)
+                    install_basic_system_packages
+                    install_devtools_packages
+                    install_media_tools_packages
+                    install_gaming_tools_packages
+                    install_terminal_tools_packages
+                    ;;
+                0) break 2 ;;
+                *) echo "Opção inválida: $choice" ;;
+            esac
+        done
     done
 }
 
@@ -157,6 +167,17 @@ while true; do
     echo "  ░   ▒     ░░   ░ ░         ░  ░░ ░   ░   ░      ░    ▒ ▒ ░░"
     echo "      ░  ░   ░     ░ ░       ░  ░  ░   ░  ░       ░    ░ ░"
     echo 
+    echo "============================================================="
+    echo "Cada script é um feitiço que invoca um conjunto de programas."
+    echo "                                            🦇Paule Macedo🦇"
+    echo "============================================================="
+    echo 
+    echo "🦇 O ritual da noite está prestes a começar..."
+    echo "⚰️ Uma força sombria desperta para dominar a instalação de sua máquina."
+    echo "🖤 Sinta o poder ancestral enquanto você invoca programas e ferramentas."
+    echo "🕯️ Com um simples comando, os feitiços do sistema e das ferramentas serão lançados."
+    echo "🦇 Sua jornada no abismo do código começou. Escolha sua opção abaixo..."
+    echo
     echo "1. Instalar Apps"
     echo "2. Instalar WebApps"
     echo "3. Instalar Dotfiles do Hyprland"
