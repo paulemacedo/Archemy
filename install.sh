@@ -1,7 +1,12 @@
 #!/bin/bash
 
 # Carregando a configuração do gerenciador de pacotes
-source config.sh
+if [ -f config.sh ]; then
+    source config.sh
+else
+    echo "Erro: config.sh não encontrado!" >&2
+    exit 1
+fi
 
 # Variável para armazenar os pacotes a serem instalados
 PACKAGES=()
@@ -10,36 +15,35 @@ PACKAGES=()
 BASIC_SYSTEM_PACKAGES="git fish flatpak kitty"
 ARCH_EXCLUSIVE_PACKAGES="base-devel paru"
 DEVTOOLS_PACKAGES="python nodejs git code github-desktop"
-MEDIA_TOOLS_PACKAGES="vlc gimp"
+ALL_PACKAGES=("$BASIC_SYSTEM_PACKAGES" "$DEVTOOLS_PACKAGES" "$MEDIA_TOOLS_PACKAGES" "$GAMING_TOOLS_PACKAGES" "$TERMINAL_TOOLS_PACKAGES")
 GAMING_TOOLS_PACKAGES="steam lutris"
 TERMINAL_TOOLS_PACKAGES="fastfetch nitch btop cava pokemon-colorscripts-git neo"
 
 # Adicionando todos os pacotes em uma variável
 ALL_PACKAGES=($BASIC_SYSTEM_PACKAGES $DEVTOOLS_PACKAGES $MEDIA_TOOLS_PACKAGES $GAMING_TOOLS_PACKAGES $TERMINAL_TOOLS_PACKAGES)
 
-case "$PKG_MANAGER" in
-    pacman|yay|paru)
-        ALL_PACKAGES+=($ARCH_EXCLUSIVE_PACKAGES)
-    *)
-        echo "Gerenciador de pacotes não é compatível com pacotes exclusivos do Arch."
-esac
-
 # Função para instalar pacotes
 install_packages() {
     echo "Pacotes a serem instalados: ${PACKAGES[@]}"
 
-    if [ "$PKG_MANAGER" == "paru" ]; then
-        paru -Sy --needed ${PACKAGES[@]} --noconfirm
-    elif [ "$PKG_MANAGER" == "yay" ]; then
-        yay -Sy --needed ${PACKAGES[@]} --noconfirm
-    elif [ "$PKG_MANAGER" == "apt" ]; then
-        sudo apt update
-        sudo apt install -y ${PACKAGES[@]}
-    elif [ "$PKG_MANAGER" == "dnf" ]; then
-        sudo dnf install -y ${PACKAGES[@]}
-    else
-        sudo pacman -Sy --needed ${PACKAGES[@]} --noconfirm
-    fi
+    case "$PKG_MANAGER" in
+        paru)
+            paru -Sy --needed ${PACKAGES[@]} --noconfirm
+            ;;
+        yay)
+            yay -Sy --needed ${PACKAGES[@]} --noconfirm
+            ;;
+        apt)
+            sudo apt update
+            sudo apt install -y ${PACKAGES[@]}
+            ;;
+        dnf)
+            sudo dnf install -y ${PACKAGES[@]}
+            ;;
+        *)
+            sudo pacman -Sy --needed ${PACKAGES[@]} --noconfirm
+            ;;
+    esac
 }
 
 # Função para instalar scripts específicos
@@ -48,12 +52,14 @@ run_script() {
     bash "$1" || { echo "Erro ao executar $1" >&2; exit 1; }
 }
 
-# Instalar todos os componentes
-    PACKAGES+=(${ALL_PACKAGES[@]})
+install_all() {
+    # Instalar todos os componentes
+    PACKAGES=($ALL_PACKAGES)
     install_packages
     for script in scripts/*.sh; do
         run_script "$script"
     done
+}
 
 
 # Menu interativo
@@ -97,8 +103,16 @@ while true; do
 
     for choice in $choices; do
         case $choice in
-            1) PACKAGES+=($BASIC_SYSTEM_PACKAGES) ;;
-            2) PACKAGES+=($DEVTOOLS_PACKAGES) ;;
+            1) 
+                PACKAGES+=($BASIC_SYSTEM_PACKAGES)
+                if [[ "$PKG_MANAGER" == "pacman" || "$PKG_MANAGER" == "yay" || "$PKG_MANAGER" == "paru" ]]; then
+                    PACKAGES+=($ARCH_EXCLUSIVE_PACKAGES)
+                else
+                    echo "Gerenciador de pacotes não é compatível com pacotes exclusivos do Arch."
+                    echo "Pacotes exclusivos do Arch não serão instalados."
+                fi
+                ;;
+            2) PACKAGES+=($DEVTOOLS_PACKAGES) ;; 
             3) PACKAGES+=($MEDIA_TOOLS_PACKAGES) ;;
             4) PACKAGES+=($GAMING_TOOLS_PACKAGES) ;;
             5) PACKAGES+=($TERMINAL_TOOLS_PACKAGES) ;;
@@ -114,4 +128,4 @@ while true; do
     if [ -n "$PACKAGES" ]; then
         install_packages
     fi
-done
+done 
