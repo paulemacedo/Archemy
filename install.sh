@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Carregando a configuração do gerenciador de pacotes
-if [ -f config.sh ]; then
-    source config.sh
+if [ -f scripts/config.sh ]; then
+    source scripts/config.sh
 else
     echo "Erro: config.sh não encontrado!" >&2
     exit 1
