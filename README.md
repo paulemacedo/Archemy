@@ -1,18 +1,37 @@
-# Archemy
+# 🦇 Archemy: Sistema de Instalação e Configuração Linux
 
-## Overview
-Archemy is a project written entirely in Shell script.
+## Descrição
+Script modular para instalação e configuração de sistemas Linux, com foco em distribuições Arch e derivadas.
 
-## Installation
-To install Archemy, follow these steps:
+## Recursos
+- Detecção automática do gerenciador de pacotes
+- Instalação de pacotes via pacman, paru, yay, apt, dnf e Flatpak
+- Configuração de WebApps
+- Instalação de dotfiles do Hyprland
+- Otimizações de sistema
 
-1. Clone the repository:
-   ```sh
+## Pré-requisitos
+- Bash
+- Git
+
+## Uso
+   ```bash
    git clone https://github.com/paulemacedo/Archemy.git
    cd Archemy
+   ./install.sh
    ```
+## Módulos
+- `package_manager.sh`: Gerenciamento de pacotes
+- `system_update.sh`: Atualização do sistema
+- `software_installation.sh`: Instalação de aplicativos
+- `webapp_config.sh`: Configuração de WebApps
+- `dotfiles.sh`: Instalação de dotfiles
+- `system_config.sh`: Configurações do sistema
 
-2. To use Archemy, run the main script:
-    ```sh
-    ./install.sh
-    ```
+## Contribuição
+Pull requests são bem-vindos. Para mudanças importantes, abra uma issue primeiro.
+
+## Licença
+[MIT]
+
+🦇 Criado por Paule Macedo
