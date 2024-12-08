@@ -3,37 +3,58 @@
 # Carregando a configuração do gerenciador de pacotes
 source config.sh
 
+# Variável para armazenar os pacotes a serem instalados
+PACKAGES=()
+
+# Definindo os pacotes a serem instalados
+BASIC_SYSTEM_PACKAGES="git fish flatpak kitty"
+ARCH_EXCLUSIVE_PACKAGES="base-devel paru"
+DEVTOOLS_PACKAGES="python nodejs git code github-desktop"
+MEDIA_TOOLS_PACKAGES="vlc gimp"
+GAMING_TOOLS_PACKAGES="steam lutris"
+TERMINAL_TOOLS_PACKAGES="fastfetch nitch btop cava pokemon-colorscripts-git neo"
+
+# Adicionando todos os pacotes em uma variável
+ALL_PACKAGES=($BASIC_SYSTEM_PACKAGES $DEVTOOLS_PACKAGES $MEDIA_TOOLS_PACKAGES $GAMING_TOOLS_PACKAGES $TERMINAL_TOOLS_PACKAGES)
+
+case "$PKG_MANAGER" in
+    pacman|yay|paru)
+        ALL_PACKAGES+=($ARCH_EXCLUSIVE_PACKAGES)
+    *)
+        echo "Gerenciador de pacotes não é compatível com pacotes exclusivos do Arch."
+esac
+
 # Função para instalar pacotes
 install_packages() {
-    local packages="$1"
-    echo "Pacotes a serem instalados: $packages"
+    echo "Pacotes a serem instalados: ${PACKAGES[@]}"
 
     if [ "$PKG_MANAGER" == "paru" ]; then
-        paru -Syu --needed $packages --noconfirm
+        paru -Sy --needed ${PACKAGES[@]} --noconfirm
     elif [ "$PKG_MANAGER" == "yay" ]; then
-        yay -Syu --needed $packages --noconfirm
+        yay -Sy --needed ${PACKAGES[@]} --noconfirm
     elif [ "$PKG_MANAGER" == "apt" ]; then
         sudo apt update
-        sudo apt install -y $packages
+        sudo apt install -y ${PACKAGES[@]}
     elif [ "$PKG_MANAGER" == "dnf" ]; then
-        sudo dnf install -y $packages
+        sudo dnf install -y ${PACKAGES[@]}
     else
-        sudo pacman -Syu --needed $packages --noconfirm
+        sudo pacman -Sy --needed ${PACKAGES[@]} --noconfirm
     fi
 }
 
 # Função para instalar scripts específicos
 run_script() {
     echo "Executando: $1"
-    bash "$1" || { echo "Erro ao executar $1"; exit 1; }
+    bash "$1" || { echo "Erro ao executar $1" >&2; exit 1; }
 }
 
 # Instalar todos os componentes
-install_all() {
+    PACKAGES+=(${ALL_PACKAGES[@]})
+    install_packages
     for script in scripts/*.sh; do
         run_script "$script"
     done
-}
+
 
 # Menu interativo
 while true; do
@@ -73,15 +94,14 @@ while true; do
     read -p "Exemplo: 1 3 5: " choices
     echo
 
-    PACKAGES=""
 
     for choice in $choices; do
         case $choice in
-            1) PACKAGES+="git base-devel fish paru flatpak kitty " ;;
-            2) PACKAGES+="python nodejs git code github-desktop " ;;
-            3) PACKAGES+="vlc gimp inkscape " ;;
-            4) PACKAGES+="steam lutris " ;;
-            5) PACKAGES+="fastfetch nitch btop cava pokemon-colorscripts-git neo " ;;
+            1) PACKAGES+=($BASIC_SYSTEM_PACKAGES) ;;
+            2) PACKAGES+=($DEVTOOLS_PACKAGES) ;;
+            3) PACKAGES+=($MEDIA_TOOLS_PACKAGES) ;;
+            4) PACKAGES+=($GAMING_TOOLS_PACKAGES) ;;
+            5) PACKAGES+=($TERMINAL_TOOLS_PACKAGES) ;;
             6) run_script scripts/webapps.sh ;;
             7) run_script scripts/hyprland_dotfiles.sh ;;
             8) run_script scripts/SyncWindowsClock.sh ;;
@@ -92,6 +112,6 @@ while true; do
     done
 
     if [ -n "$PACKAGES" ]; then
-        install_packages "$PACKAGES"
+        install_packages
     fi
 done
