@@ -64,3 +64,4 @@ while true; do
             *) echo "Opção inválida: $choice" ;;
         esac
     done
+done
