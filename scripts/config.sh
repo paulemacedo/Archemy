@@ -6,6 +6,10 @@ detect_package_manager() {
         echo "paru"
     elif command -v yay &> /dev/null; then
         echo "yay"
+    elif command -v apt &> /dev/null; then
+        echo "apt"
+    elif command -v dnf &> /dev/null; then
+        echo "dnf"
     else
         echo "pacman"
     fi
