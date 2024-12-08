@@ -187,6 +187,9 @@ sync_windows_clock() {
 # Função para o submenu de instalação de aplicativos
 install_apps_menu() {
     while true; do
+        echo "============================="
+        echo "   O que deseja instalar?    "
+        echo "============================="
         echo "1. Instalar Pacotes Básicos do Sistema"
         echo "2. Instalar Ferramentas de Desenvolvimento"
         echo "3. Instalar Ferramentas de Mídia"
@@ -220,9 +223,31 @@ install_apps_menu() {
 
 # Função para o submenu de WebApps
 install_webapps_menu() {
-    configure_webapp "Telegram" "https://web.telegram.org/" "telegram"
-    configure_webapp "WhatsApp" "https://web.whatsapp.com/" "whatsapp"
-    echo "Todos os WebApps foram configurados!"
+    while true; do
+        echo "============================="
+        echo "   O que deseja instalar?    "
+        echo "============================="
+        echo "1. Configurar Telegram"
+        echo "2. Configurar WhatsApp"
+        echo "3. Configurar Todos os WebApps"
+        echo "0. Voltar ao menu principal"
+        echo
+        read -p "Escolha uma ou mais opções (ex: 1 2 3): " sub_choice
+
+        for choice in $sub_choice; do
+            case $choice in
+                1) configure_webapp "Telegram" "https://web.telegram.org/" "telegram" ;;
+                2) configure_webapp "WhatsApp" "https://web.whatsapp.com/" "whatsapp" ;;
+                3)
+                    configure_webapp "Telegram" "https://web.telegram.org/" "telegram"
+                    configure_webapp "WhatsApp" "https://web.whatsapp.com/" "whatsapp"
+                    echo "Todos os WebApps foram configurados!"
+                    ;;
+                0) return ;;
+                *) echo "Opção inválida: $choice" ;;
+            esac
+        done
+    done
 }
 
 # Função para o submenu de Dotfiles do Hyprland
