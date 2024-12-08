@@ -46,19 +46,21 @@ while true; do
     echo "8. Instalar Tudo"
     echo "0. Sair"
     echo
-    read -p "Escolha uma opção: " choice
+    echo "Escolha suas opções (separadas por espaço):"
+    read -p "Exemplo: 1 3 5: " choices
     echo
 
-    case $choice in
-        1) run_script scripts/system.sh ;;
-        2) run_script scripts/devtools.sh ;;
-        3) run_script scripts/media_tools.sh ;;
-        4) run_script scripts/gaming_tools.sh ;;
-        5) run_script scripts/terminal_tools.sh ;;
-        6) run_script scripts/webapps.sh ;;
-        7) run_script scripts/dotfiles.sh ;;
-        7) install_all ;;
-        0) echo "Saindo..." && exit ;;
-        *) echo "Opção inválida! Tente novamente." ;;
-    esac
-done
+    for choice in $choices; do
+        case $choice in
+            1) run_script scripts/system.sh ;;
+            2) run_script scripts/devtools.sh ;;
+            3) run_script scripts/media_tools.sh ;;
+            4) run_script scripts/gaming_tools.sh ;;
+            5) run_script scripts/terminal_tools.sh ;;
+            6) run_script scripts/webapps.sh ;;
+            7) run_script scripts/hyprland_dotfiles.sh ;;
+            8) run_script scripts/install_all.sh ;;
+            0) echo "Saindo..."; exit 0 ;;
+            *) echo "Opção inválida: $choice" ;;
+        esac
+    done
