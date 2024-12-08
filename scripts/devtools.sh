@@ -14,6 +14,10 @@ if [ "$PKG_MANAGER" == "paru" ]; then
     paru -Syu --needed $PACKAGES --noconfirm
 elif [ "$PKG_MANAGER" == "yay" ]; then
     yay -Syu --needed $PACKAGES --noconfirm
+elif [ "$PKG_MANAGER" == "apt" ]; then
+    sudo apt install -y $PACKAGES
+elif [ "$PKG_MANAGER" == "dnf" ]; then
+    sudo dnf install -y $PACKAGES
 else
     sudo pacman -Syu --needed $PACKAGES --noconfirm
 fi

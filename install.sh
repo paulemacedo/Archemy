@@ -1,10 +1,27 @@
 #!/bin/bash
+# Carregando a configuração do gerenciador de pacotes
+source config.sh
 
 # Função para instalar scripts específicos
 run_script() {
     echo "Executando: $1"
     bash "$1" || { echo "Erro ao executar $1"; exit 1; }
 }
+
+echo "Atualizando sistema..."
+# Instalando ferramentas com o gerenciador de pacotes detectado
+if [ "$PKG_MANAGER" == "paru" ]; then
+    paru -Syu 
+elif [ "$PKG_MANAGER" == "yay" ]; then
+    yay -Syu
+elif [ "$PKG_MANAGER" == "apt" ]; then
+    sudo apt update && sudo apt upgrade
+elif [ "$PKG_MANAGER" == "dnf" ]; then
+    sudo dnf upgrade --refresh
+else
+    sudo pacman -Syu
+fi
+
 
 # Instalar todos os componentes
 install_all() {
