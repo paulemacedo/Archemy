@@ -10,6 +10,7 @@ source "$SCRIPT_DIR/software_installation.sh"
 source "$SCRIPT_DIR/webapp_config.sh"
 source "$SCRIPT_DIR/dotfiles.sh"
 source "$SCRIPT_DIR/system_config.sh"
+source "$SCRIPT_DIR/helper.sh"
 
 # Menu principal
 main_menu() {
@@ -54,13 +55,13 @@ main_menu() {
     done
 }
 
-# Verificar dependências
+# Verificar e instalar dependências usando o package_manager.sh
 check_dependencies() {
     local dependencies=("bash" "git" "flatpak")
     for dep in "${dependencies[@]}"; do
         if ! command -v "$dep" &> /dev/null; then
-            echo "Dependência ausente: $dep"
-            exit 1
+            echo "Dependência ausente: $dep. Tentando instalar..."
+            install_package "$dep"
         fi
     done
 }

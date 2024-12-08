@@ -1,6 +1,6 @@
 - [x] Adicionar Suporte a Apt
 - [x] Adicionar Suporte ao do Fedora
-- [ ] Adicionar Verificação de Dependências
+- [x] Adicionar Verificação de Dependências
 - [ ] Adicione suporte para múltiplos idiomas.
 - [ ] Adicionar Logs
 - [ ] Adicionar Função de Ajuda

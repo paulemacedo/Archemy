@@ -1,11 +1,12 @@
 #!/bin/bash
 
-# Fonte do módulo de gerenciamento de pacotes
+# Importar módulos necessários
 source ./package_manager.sh
+source ./helper.sh
 
 # Função para atualizar o sistema
 update_system() {
-    echo "Atualizando o sistema..."
+    info_msg "Atualizando o sistema..."
     case "$PKG_MANAGER" in
         paru)
             paru -Syu --noconfirm
@@ -23,15 +24,16 @@ update_system() {
             sudo pacman -Syu --noconfirm
             ;;
         *)
-            echo "Gerenciador de pacotes não suportado: $PKG_MANAGER"
+            error_msg "Gerenciador de pacotes não suportado: $PKG_MANAGER"
             return 1
             ;;
     esac
+    success_msg "Sistema atualizado com sucesso!"
 }
 
 # Função para limpar caches e pacotes órfãos
 clean_system() {
-    echo "Limpando sistema..."
+    info_msg "Limpando sistema..."
     case "$PKG_MANAGER" in
         paru|yay)
             "$PKG_MANAGER" -Sc --noconfirm
@@ -49,5 +51,10 @@ clean_system() {
             sudo pacman -Sc --noconfirm
             sudo pacman -Rns "$(pacman -Qtdq)" --noconfirm 2>/dev/null || true
             ;;
+        *)
+            error_msg "Gerenciador de pacotes não suportado: $PKG_MANAGER"
+            return 1
+            ;;
     esac
+    success_msg "Sistema limpo com sucesso!"
 }

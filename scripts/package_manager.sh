@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Importar helper
+source ./helper.sh
+
 # Função para detectar o gerenciador de pacotes
 detect_package_manager() {
     if command -v paru &> /dev/null; then
