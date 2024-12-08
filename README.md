@@ -12,7 +12,7 @@ To install Archemy, follow these steps:
    cd Archemy
    ```
 
-3. To use Archemy, run the main script:
+2. To use Archemy, run the main script:
     ```sh
     ./install.sh
     ```
