@@ -1,24 +1,27 @@
 #!/bin/bash
 
-echo "Configurando WebApps..."
-mkdir -p ~/.local/share/applications/
+# Função para configurar um WebApp
+configure_webapp() {
+    local name=$1
+    local url=$2
+    local icon=$3
 
-# Telegram
-cat <<EOF > ~/.local/share/applications/telegram.desktop
+    echo "Configurando WebApp: $name..."
+    mkdir -p ~/.local/share/applications/
+
+    cat <<EOF > ~/.local/share/applications/${name,,}.desktop
 [Desktop Entry]
-Name=Telegram
-Exec=brave --app=https://web.telegram.org/
-Icon=telegram
+Name=$name
+Exec=brave --app=$url
+Icon=$icon
 Type=Application
 EOF
 
-# WhatsApp
-cat <<EOF > ~/.local/share/applications/whatsapp.desktop
-[Desktop Entry]
-Name=WhatsApp
-Exec=brave --app=https://web.whatsapp.com/
-Icon=whatsapp
-Type=Application
-EOF
+    echo "WebApp $name configurado!"
+}
 
-echo "WebApps configurados!"
+# Configurando WebApps
+configure_webapp "Telegram" "https://web.telegram.org/" "telegram"
+configure_webapp "WhatsApp" "https://web.whatsapp.com/" "whatsapp"
+
+echo "Todos os WebApps foram configurados!"
