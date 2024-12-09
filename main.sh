@@ -70,14 +70,14 @@ main_menu() {
         echo 
         echo "============================================================="
         echo "Cada script é um feitiço que invoca um conjunto de programas."
-        echo "                                            🦇Paule Macedo🦇"
+        echo "                                               ─ Paule Macedo"
         echo "============================================================="
         echo 
-        echo "🦇 O ritual da noite está prestes a começar..."
-        echo "⚰️ Uma força sombria desperta para dominar a instalação de sua máquina."
-        echo "🖤 Sinta o poder ancestral enquanto você invoca programas e ferramentas."
-        echo "🕯️ Com um simples comando, os feitiços do sistema e das ferramentas serão lançados."
-        echo "🦇 Sua jornada no abismo do código começou. Escolha sua opção abaixo..."
+        echo "- O ritual da noite está prestes a começar..."
+        echo "- Uma força sombria desperta para dominar a instalação de sua máquina."
+        echo "- Sinta o poder ancestral enquanto você invoca programas e ferramentas."
+        echo "- Com um simples comando, os feitiços do sistema e das ferramentas serão lançados."
+        echo "- Sua jornada no abismo do código começou. Escolha sua opção abaixo..."
         echo
         echo "1. Instalar Apps"
         echo "2. Instalar WebApps"
