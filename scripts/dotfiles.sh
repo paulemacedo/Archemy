@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Importar helper
-source ./helper.sh
+source scripts/helper.sh
 
 # Função para instalar Hyprdots
 install_hyprdots() {

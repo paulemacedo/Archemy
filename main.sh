@@ -1,38 +1,18 @@
 #!/bin/bash
 
-# Definir caminho dos scripts
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/scripts"
-
 # Importar módulos
-source "$SCRIPT_DIR/package_manager.sh"
-source "$SCRIPT_DIR/system_update.sh"
-source "$SCRIPT_DIR/software_installation.sh"
-source "$SCRIPT_DIR/webapp_config.sh"
-source "$SCRIPT_DIR/dotfiles.sh"
-source "$SCRIPT_DIR/system_config.sh"
-source "$SCRIPT_DIR/helper.sh"
+source "scripts/package_manager.sh"
+source "scripts/system_update.sh"
+source "scripts/software_installation.sh"
+source "scripts/webapp_config.sh"
+source "scripts/dotfiles.sh"
+source "scripts/system_config.sh"
+source "scripts/helper.sh"
 
-# Verificar argumentos de linha de comando
-if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-    show_help
-    exit 0
-elif [[ "$1" == "-i || "$1" == "--minimal" ]]; then
-    install_all_apps
-    exit 0
-elif [[ "$1" == "-w" || "$1" == "--webapps" ]]; then
-    install_all_webapps
-    exit 0
-elif [[ "$1" == "-c" || "$1" == "--complete" ]]; then
-    install_all_apps
-    install_all_webapps
-    sync_windows_clock
-    exit 0
-fi
 
 
 # Função para exibir a ajuda
 show_help() {
-    echo "Uso: $0 [opções]"
     echo
     echo "Archemy: Sistema de Instalação e Configuração Linux"
     echo
@@ -56,6 +36,24 @@ show_help() {
     echo "  ./main.sh -c, --complete    Instala todos os aplicativos, WebApps e sincroniza o relógio"
     echo "  ./main.sh                   Execute o script sem opções para exibir o menu interativo"
 }
+
+# Verificar argumentos de linha de comando
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    show_help
+    exit 0
+elif [[ "$1" == "-i" || "$1" == "--minimal" ]]; then
+    install_all_apps
+    exit 0
+elif [[ "$1" == "-w" || "$1" == "--webapps" ]]; then
+    install_all_webapps
+    exit 0
+elif [[ "$1" == "-c" || "$1" == "--complete" ]]; then
+    install_all_apps
+    install_all_webapps
+    sync_windows_clock
+    exit 0
+fi
+
 
 # Menu principal
 main_menu() {

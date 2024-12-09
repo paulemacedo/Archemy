@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Importar módulos necessários
-source ./package_manager.sh
-source ./helper.sh
+source scripts/package_manager.sh
+source scripts/helper.sh
 
 # Função para atualizar o sistema
 update_system() {

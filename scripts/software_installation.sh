@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Fonte dos módulos necessários
-source ./package_manager.sh
-source ./helper.sh
+source scripts/package_manager.sh
+source scripts/helper.sh
 
 # Funções de instalação de pacotes
 install_basic_system_packages() {
@@ -11,7 +11,7 @@ install_basic_system_packages() {
     install_package "flatpak" "org.flatpak.Flatpak"
     install_package "kitty" "io.kitty.Kitty"
 
-    if [[ "$PKG_MANAGER" == "pacman" || "$PKG_MANAGER" == "yay" || "$PKG_MANAGER" == "paru" ]]; então
+    if [[ "$PKG_MANAGER" == "pacman" || "$PKG_MANAGER" == "yay" || "$PKG_MANAGER" == "paru" ]]; then
         install_package "base-devel"
         install_package "paru"
     fi

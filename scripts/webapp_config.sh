@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Importar helper
-source ./helper.sh
+source scripts/helper.sh
 
 # Função para configurar WebApps
 configure_webapp() {
