@@ -55,6 +55,7 @@ install_all_apps() {
 # Menu de instalação de aplicativos
 install_apps_menu() {
     while true; do
+        echo
         echo "============================="
         echo "   O que deseja instalar?    "
         echo "============================="

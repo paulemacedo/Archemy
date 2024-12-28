@@ -35,6 +35,7 @@ install_all_webapps() {
 # Menu de WebApps
 install_webapps_menu() {
     while true; do
+        echo
         echo "============================="
         echo "   O que deseja instalar?    "
         echo "============================="

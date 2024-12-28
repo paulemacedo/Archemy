@@ -110,5 +110,5 @@ check_dependencies() {
 }
 
 # Executar verificações e menu principal
-check_dependencies
+#check_dependencies
 main_menu
