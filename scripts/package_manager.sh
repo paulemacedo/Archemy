@@ -25,6 +25,8 @@ PKG_MANAGER=$(detect_package_manager)
 install_package() {
     local package=$1
     local fallback_flatpak=${2:-}
+    local apt_package_name=${3:-$package}
+    local dnf_package_name=${4:-$package}
 
     echo "Instalando pacote: $package"
 
@@ -36,10 +38,10 @@ install_package() {
             yay -Sy --needed "$package" --noconfirm || install_flatpak "${fallback_flatpak:-$package}"
             ;;
         apt)
-            sudo apt install -y "$package" || install_flatpak "${fallback_flatpak:-$package}"
+            sudo apt install -y "$apt_package_name" || install_flatpak "${fallback_flatpak:-$package}"
             ;;
         dnf)
-            sudo dnf install -y "$package" || install_flatpak "${fallback_flatpak:-$package}"
+            sudo dnf install -y "$dnf_package_name" || install_flatpak "${fallback_flatpak:-$package}"
             ;;
         pacman)
             sudo pacman -Sy --needed "$package" --noconfirm || install_flatpak "${fallback_flatpak:-$package}"

@@ -32,6 +32,7 @@ install_media_tools_packages() {
 }
 
 install_gaming_tools_packages() {
+    install_package "parsec" ""
     install_package "steam" "com.valvesoftware.Steam"
     install_package "lutris" "net.lutris.Lutris"
 }
