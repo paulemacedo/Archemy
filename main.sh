@@ -11,30 +11,30 @@ source "scripts/helper.sh"
 
 
 
-# Função para exibir a ajuda
+# Function to display help
 show_help() {
     echo
-    echo "Archemy: Sistema de Instalação e Configuração Linux"
+    echo "Archemy: Linux Installation and Configuration System"
     echo
-    echo "Descrição:"
-    echo "  Archemy é um script para instalação e configuração de sistemas Linux,"
-    echo "  com foco em distribuições Arch e derivadas. Ele automatiza a instalação de"
-    echo "  pacotes, configuração de WebApps, instalação de dotfiles do Hyprland e"
-    echo "  otimizações de sistema."
+    echo "Description:"
+    echo "  Archemy is a script for installing and configuring Linux systems,"
+    echo "  focusing on Arch and derivative distributions. It automates the installation of"
+    echo "  packages, WebApps configuration, Hyprland dotfiles installation, and"
+    echo "  system optimizations."
     echo
-    echo "Recursos:"
-    echo "  - Detecção automática do gerenciador de pacotes"
-    echo "  - Instalação de pacotes via pacman, paru, yay, apt, dnf e Flatpak"
-    echo "  - Configuração de WebApps"
-    echo "  - Instalação de dotfiles do Hyprland"
-    echo "  - Otimizações de sistema"
+    echo "Features:"
+    echo "  - Automatic package manager detection"
+    echo "  - Package installation via pacman, paru, yay, apt, dnf, and Flatpak"
+    echo "  - WebApps configuration"
+    echo "  - Hyprland dotfiles installation"
+    echo "  - System optimizations"
     echo
-    echo "Opções:"
-    echo "  ./main.sh -h, --help        Exibe esta mensagem de ajuda"
-    echo "  ./main.sh -i, --minimal     Instala todos os aplicativos"
-    echo "  ./main.sh -w, --webapps     Instala todos os WebApps"
-    echo "  ./main.sh -c, --complete    Instala todos os aplicativos, WebApps e sincroniza o relógio"
-    echo "  ./main.sh                   Execute o script sem opções para exibir o menu interativo"
+    echo "Options:"
+    echo "  ./main.sh -h, --help        Display this help message"
+    echo "  ./main.sh -i, --minimal     Install all applications"
+    echo "  ./main.sh -w, --webapps     Install all WebApps"
+    echo "  ./main.sh -c, --complete    Install all applications, WebApps, and sync the clock"
+    echo "  ./main.sh                   Run the script without options to display the interactive menu"
 }
 
 # Verificar argumentos de linha de comando
@@ -69,42 +69,39 @@ main_menu() {
         echo "      ░  ░   ░     ░ ░       ░  ░  ░   ░  ░       ░    ░ ░"
         echo 
         echo "============================================================="
-#        echo "Ⲥⲁⲇⲁ 𝛓ⲥꞅⲓⲣⲧ ⲉ́ 𐌵ⲙ 𝓯ⲉⲓⲧⲓⲥ̧ⲟ 𝓺𐌵ⲉ ⲓⲛ𝓿ⲟⲥⲁ 𐌵ⲙ ⲥⲟⲛ𝓳𐌵ⲛⲧⲟ ⲇⲉ ⲣꞅⲟ𝓰ꞅⲁⲙⲁ𝛓."
-        echo "Cada script é um feitiço que invoca um conjunto de programas."
-        echo "                                               ─ Paule Macedo"
-        echo "============================================================="
-        echo 
-        echo "- O ritual da noite está prestes a começar..."
-        echo "- Uma força sombria desperta para dominar a instalação de sua máquina."
-        echo "- Sinta o poder ancestral enquanto você invoca programas e ferramentas."
-        echo "- Com um simples comando, os feitiços do sistema e das ferramentas serão lançados."
-        echo "- Sua jornada no abismo do código começou. Escolha sua opção abaixo..."
-        echo
-        echo "1. Instalar Apps"
-        echo "2. Instalar WebApps"
-        echo "3. Instalar Dotfiles do Hyprland"
-        echo "4. Sincronizar relógio (Localtime)"
-        echo "0. Sair"
-        echo
-        read -p "Escolha uma opção: " choice
+echo "Each script is a spell that invokes a set of programs."
+echo "                                               ─ Paule Macedo"
+echo "============================================================="
+echo 
+echo "- The night ritual is about to begin..."
+echo "- A dark force awakens to dominate the installation of your machine."
+echo "- Feel the ancestral power as you invoke programs and tools."
+echo "- With a simple command, system and tool spells will be cast."
+echo "- Your journey into the abyss of code has begun. Choose your option below..."
+echo
+echo "1. Install Apps"
+echo "2. Install Hyprland Dotfiles"
+echo "3. Sync Clock (Localtime)"
+echo "0. Exit"
+echo
+read -p "Choose an option: " choice
 
-        case $choice in
-            1) install_apps_menu ;;
-            2) install_webapps_menu ;;
-            3) install_hyprland_dotfiles_menu ;;
-            4) sync_windows_clock ;;
-            0) echo "Saindo..."; exit 0 ;;
-            *) echo "Opção inválida!" ;;
-        esac
+case $choice in
+    1) install_apps_menu ;;
+    2) install_hyprland_dotfiles_menu ;;
+    3) sync_windows_clock ;;
+    0) echo "Exiting..."; exit 0 ;;
+    *) echo "Invalid option!" ;;
+esac
     done
 }
 
-# Verificar e instalar dependências usando o package_manager.sh
+# Check and install dependencies using package_manager.sh
 check_dependencies() {
     local dependencies=("bash" "git" "flatpak")
     for dep in "${dependencies[@]}"; do
         if ! command -v "$dep" &> /dev/null; then
-            echo "Dependência ausente: $dep. Tentando instalar..."
+            echo "Missing dependency: $dep. Attempting to install..."
             install_package "$dep"
         fi
     done

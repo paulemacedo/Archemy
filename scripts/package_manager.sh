@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Importar helper
+# Import helper
 source scripts/helper.sh
 
-# Função para detectar o gerenciador de pacotes
+# Function to detect the package manager
 detect_package_manager() {
     if command -v paru &> /dev/null; then
         echo "paru"
@@ -18,17 +18,17 @@ detect_package_manager() {
     fi
 }
 
-# Variável global para armazenar o gerenciador de pacotes
+# Global variable to store the package manager
 PKG_MANAGER=$(detect_package_manager)
 
-# Função para instalar pacote genérica
+# Generic function to install package
 install_package() {
     local package=$1
     local fallback_flatpak=${2:-}
     local apt_package_name=${3:-$package}
     local dnf_package_name=${4:-$package}
 
-    echo "Instalando pacote: $package"
+    echo "Installing package: $package via $PKG_MANAGER"
 
     case "$PKG_MANAGER" in
         paru)
@@ -47,17 +47,17 @@ install_package() {
             sudo pacman -Sy --needed "$package" --noconfirm || install_flatpak "${fallback_flatpak:-$package}"
             ;;
         *)
-            echo "Gerenciador de pacotes não suportado: $PKG_MANAGER"
+            echo "Unsupported package manager: $PKG_MANAGER"
             return 1
             ;;
     esac
 }
 
-# Função para instalar via Flatpak
+# Function to install via Flatpak
 install_flatpak() {
     local package=$1
     if [ -n "$package" ]; then
-        echo "Instalando pacote via flatpak: $package"
+        echo "Installing package via flatpak: $package"
         flatpak install flathub "$package" -y
     fi
 }

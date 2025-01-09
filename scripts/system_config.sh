@@ -3,28 +3,28 @@
 # Importar helper
 source scripts/helper.sh
 
-# Função para sincronizar o relógio do Windows
+# Function to synchronize Windows clock
 sync_windows_clock() {
-    if confirm_action "Deseja configurar o relógio para Localtime?"; then
-        info_msg "Configurando relógio para Localtime..."
+    if confirm_action "Do you want to set the clock to Localtime?"; then
+        info_msg "Setting clock to Localtime..."
         sudo timedatectl set-local-rtc 1 --adjust-system-clock
         timedatectl
-        success_msg "Relógio configurado para Localtime com sucesso!"
+        success_msg "Clock successfully set to Localtime!"
     else
-        warn_msg "Operação cancelada."
+        warn_msg "Operation cancelled."
     fi
 }
 
-# Função para configurações gerais do sistema
+# Function for general system configurations
 system_optimization() {
-    info_msg "Otimizando configurações do sistema..."
+    info_msg "Optimizing system configurations..."
     
-    # Desabilitar beep do sistema
+    # Disable system beep
     sudo bash -c 'echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf'
     
-    # Aumentar limites de inotify
+    # Increase inotify limits
     sudo bash -c 'echo "fs.inotify.max_user_watches=524288" > /etc/sysctl.d/40-max-user-watches.conf'
     sudo sysctl --system
 
-    success_msg "Configurações do sistema otimizadas com sucesso!"
+    success_msg "System configurations optimized successfully!"
 }

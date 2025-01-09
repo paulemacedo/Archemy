@@ -53,22 +53,22 @@ install_all_apps() {
     install_terminal_tools_packages
 }
 
-# Menu de instalação de aplicativos
+# Application installation menu
 install_apps_menu() {
     while true; do
         echo
         echo "============================="
-        echo "   O que deseja instalar?    "
+        echo "      What to install?       "
         echo "============================="
-        echo "1. Pacotes Básicos do Sistema"
-        echo "2. Ferramentas de Desenvolvimento"
-        echo "3. Ferramentas de Mídia"
-        echo "4. Ferramentas de Jogos"
-        echo "5. Ferramentas de Terminal"
-        echo "6. Instalar Todos"
-        echo "0. Voltar"
+        echo "1. Basic System Packages"
+        echo "2. Development Tools"
+        echo "3. Media Tools"
+        echo "4. Gaming Tools"
+        echo "5. Terminal Tools"
+        echo "6. Install All"
+        echo "0. Back"
 
-        read -p "Escolha uma opção: " choice
+        read -p "Choose an option: " choice
 
         case $choice in
             1) install_basic_system_packages ;;
@@ -78,7 +78,7 @@ install_apps_menu() {
             5) install_terminal_tools_packages ;;
             6) install_all_apps ;;
             0) break ;;
-            *) echo "Opção inválida!" ;;
+            *) echo "Invalid option!" ;;
         esac
     done
 }
