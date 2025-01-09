@@ -24,15 +24,13 @@ Script modular para instalação e configuração de sistemas Linux, com foco em
    - `Sem Comandos`: Executa o script principal com menu
    - `-h, --help`: Exibe a mensagem de ajuda
    - `-i, --minimal`: Instala todos os aplicativos
-   - `-w, --webapps`: Instala todos os webapps
-   - `-c, --complete`: Instala todos os aplicativos, webapps e sincroniza o relógio com o windows
+   - `-c, --complete`: Instala todos os aplicativos e sincroniza o relógio com o windows
 
 ## Módulos
 - `package_manager.sh`: Gerenciamento de pacotes
 - `system_update.sh`: Atualização do sistema
 - `software_installation.sh`: Instalação de aplicativos
-- `webapp_config.sh`: Configuração de WebApps
-- `dotfiles.sh`: Instalação de dotfiles
+- `dotfiles.sh`: Instalação de dotfiles hyprland
 - `system_config.sh`: Configurações do sistema
 - `helper.sh`: Funções auxiliares para mensagens, logs, backups e verificações
 
