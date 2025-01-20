@@ -25,10 +25,18 @@ install_devtools_packages() {
     install_package "github-desktop" "io.github.shiftey.Desktop"
 }
 
+install_cybersecurity_packages() {
+    install_package "burpsuite" "org.burpsuite.BurpSuite"
+    # install_package "nmap" "org.nmap.Nmap"
+    # install_package "wireshark-qt" "org.wireshark.Wireshark"
+    # install_package "metasploit" "org.metasploit.Metasploit"
+    # install_package "john" "org.johntheripper.JohnTheRipper"
+    # install_package "hydra" "org.thc-hydra.Hydra"
+}
+
 install_media_tools_packages() {
     install_package "vlc" "org.videolan.VLC"
     install_package "gimp" "org.gimp.GIMP"
-    install_package "inkscape" "org.inkscape.Inkscape"
 }
 
 install_gaming_tools_packages() {

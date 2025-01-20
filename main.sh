@@ -54,6 +54,7 @@ elif [[ "$1" == "-c" || "$1" == "--complete" ]]; then
     exit 0
 fi
 
+package_manager=$(detect_package_manager)
 
 # Menu principal
 main_menu() {
@@ -79,6 +80,8 @@ echo "- Feel the ancestral power as you invoke programs and tools."
 echo "- With a simple command, system and tool spells will be cast."
 echo "- Your journey into the abyss of code has begun. Choose your option below..."
 echo
+echo package_manager detectado: $package_manager
+echo "============================="
 echo "1. Install Apps"
 echo "2. Install Hyprland Dotfiles"
 echo "3. Sync Clock (Localtime)"
