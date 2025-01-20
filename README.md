@@ -1,41 +1,44 @@
+# 🦇 Archemy: Sistema de Instalação e Configuração Linux
 
-<div align="center">
-   <a href="http://paulemacedo.vercel.app"><img src="assets/Archemy.png" alt="Archemy Icon" width="100" height="100" /></a>
-   <p>Archemy is a modular script for installing and configuring Linux systems, focusing on Arch and its derivatives.</p>
-   <div>
-      <img src="https://img.shields.io/badge/bash-432E54?style=for-the-badge&logo=gnu-bash&logoColor=white" alt="Bash" />
-      <img src="https://img.shields.io/badge/Made%20by-Paule-432E54?style=for-the-badge" alt="Made by" />
-      <img src="https://img.shields.io/badge/Made%20with%20-❤️-432E54?style=for-the-badge&color=432E54" alt="Love" />
-      <img src="https://img.shields.io/github/license/paulemacedo/Archemy?style=for-the-badge&color=432E54" alt="GitHub license" />
-   </div>
-</div>
+## Descrição
+Script modular para instalação e configuração de sistemas Linux, com foco em distribuições Arch e derivadas.
 
-## Features
-- Automatic package manager detection
-- Package installation via pacman, paru, yay, apt, dnf, and Flatpak
-- WebApps configuration
-- Hyprland dotfiles installation
-- System optimizations
+## Recursos
+- Detecção automática do gerenciador de pacotes
+- Instalação de pacotes via pacman, paru, yay, apt, dnf e Flatpak
+- Configuração de WebApps
+- Instalação de dotfiles do Hyprland
+- Otimizações de sistema
 
-## Usage
+## Pré-requisitos
+- Bash
+- Git
+
+## Uso
    ```bash
    git clone https://github.com/paulemacedo/Archemy.git
    cd Archemy
    ./main.sh
    ```
-## Options
-   - `No Commands`: Runs the main script with menu
-   - `-h, --help`: Displays the help message
-   - `-i, --minimal`: Installs all applications
-   - `-c, --complete`: Installs all applications and syncs the clock with Windows
+   ## Opções
+   - `Sem Comandos`: Executa o script principal com menu
+   - `-h, --help`: Exibe a mensagem de ajuda
+   - `-i, --minimal`: Instala todos os aplicativos
+   - `-c, --complete`: Instala todos os aplicativos e sincroniza o relógio com o windows
 
-## Modules
-- `package_manager.sh`: Package management
-- `system_update.sh`: System update
-- `software_installation.sh`: Application installation
-- `dotfiles.sh`: Hyprland dotfiles installation
-- `system_config.sh`: System configurations
-- `helper.sh`: Auxiliary functions for messages, logs, backups, and checks
+## Módulos
+- `package_manager.sh`: Gerenciamento de pacotes
+- `system_update.sh`: Atualização do sistema
+- `software_installation.sh`: Instalação de aplicativos
+- `dotfiles.sh`: Instalação de dotfiles hyprland
+- `system_config.sh`: Configurações do sistema
+- `helper.sh`: Funções auxiliares para mensagens, logs, backups e verificações
 
-## Contribution
-Pull requests are welcome. For major changes, please open an issue first.
+
+## Contribuição
+Pull requests são bem-vindos. Para mudanças importantes, abra uma issue primeiro.
+
+## Licença
+[MIT]
+
+🦇 Criado por Paule Macedo
