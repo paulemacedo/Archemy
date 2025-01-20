@@ -13,7 +13,6 @@
 ## Features
 - Automatic package manager detection
 - Package installation via pacman, paru, yay, apt, dnf, and Flatpak
-- WebApps configuration
 - Hyprland dotfiles installation
 - System optimizations
 
